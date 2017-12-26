@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="songList"></div>
+	<script>
+	var xml=null;
+	if(window.XMLHttpRequest){
+		xml=new XMLHttpRequest();
+	}else{
+		xml=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xml.onreadystatechange=function(){
+		if(xml.readyState===4){
+			if(xml.status===200){
+				//console.log(xml.responseText);
+				var obj=JSON.parse(xml.responseText);
+				//console.log(obj)
+				for(var i in obj){
+					var a=document.createElemant('a');
+					var p=document.createElemant('p');
+					a.setAttribute('href',obj[i]);
+					a.innerHTML=i;
+					var songList=document.getElementById('songList');
+					p.appendChild(a);
+					songList.appendChild(p)
+				}
+
+			}
+		}
+	}
+	xml.open('get','/getData',true);
+	xml.send(null);
+	</script>
+</body>
+</html>
